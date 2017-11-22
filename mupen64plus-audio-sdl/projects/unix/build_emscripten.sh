@@ -1,0 +1,20 @@
+#!/bin/bash
+
+emmake make \
+  UNAME="Linux" \
+  EMSCRIPTEN=1 \
+  NO_SRC=1 \
+  NO_SPEEX=1 \
+  NO_OSS=1 \
+  SO_EXTENSION="js" \
+  USE_GLES=1 NO_ASM=1 \
+  ZLIB_CFLAGS="-s USE_ZLIB=1" \
+  PKG_CONFIG="" \
+  LIBPNG_CFLAGS="-s USE_LIBPNG=1" \
+  SDL_CFLAGS="-s USE_SDL=2" \
+  FREETYPE2_CFLAGS="-s USE_FREETYPE=1" \
+  GL_CFLAGS="" \
+  GLU_CFLAGS="" \
+  V=1 \
+  OPTFLAGS="-O0 -g2 -s SIDE_MODULE=1 -s ASSERTIONS=1 -DEMSCRIPTEN=1 -DNO_FILTER_THREAD=1" \
+  $1

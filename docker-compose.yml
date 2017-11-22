@@ -1,0 +1,4 @@
+n64:
+  build: .
+  volumes:
+    - .:/app
