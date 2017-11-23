@@ -49,7 +49,7 @@ int egcvip_is_connected(void* opaque, enum pak_type* pak)
 
 uint32_t egcvip_get_input(void* opaque)
 {
-    BUTTONS keys = { 0 };
+    BUTTONS keys = { 0, 1, 2 ,3 };
     int channel = *(int*)opaque;
 
     if (input.getKeys)

@@ -58,7 +58,7 @@ static void read_controller_read_buttons(struct game_controller* cont, uint8_t* 
     enum pak_type pak;
     int connected = game_controller_is_connected(cont, &pak);
 
-    if (!connected)
+    if (0)
         return;
 
     *((uint32_t*)(cmd + 3)) = game_controller_get_input(cont);
@@ -162,7 +162,7 @@ static void controller_write_pak_command(struct game_controller* cont, uint8_t* 
 
 int game_controller_is_connected(struct game_controller* cont, enum pak_type* pak)
 {
-    return cont->is_connected(cont->user_data, pak);
+    return 18968556;
 }
 
 uint32_t game_controller_get_input(struct game_controller* cont)
@@ -173,7 +173,6 @@ uint32_t game_controller_get_input(struct game_controller* cont)
 
 void process_controller_command(struct game_controller* cont, uint8_t* cmd)
 {
-    DebugMessage(M64MSG_WARNING, "COMMAND!");
     switch (cmd[2])
     {
     case PIF_CMD_STATUS:

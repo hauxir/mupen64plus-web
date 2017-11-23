@@ -952,7 +952,7 @@ m64p_error main_run(void)
     g_si.pif.af_rtc.get_time = get_time_using_C_localtime;
 
     /* connect external game controllers */
-    for(i = 0; i < GAME_CONTROLLERS_COUNT; ++i)
+    for(i = 0; i < 4; ++i)
     {
         g_si.pif.controllers[i].user_data = &channels[i];
         g_si.pif.controllers[i].is_connected = egcvip_is_connected;
@@ -960,7 +960,7 @@ m64p_error main_run(void)
     }
 
     /* connect external rumblepaks */
-    for(i = 0; i < GAME_CONTROLLERS_COUNT; ++i)
+    for(i = 0; i < 4; ++i)
     {
         g_si.pif.controllers[i].rumblepak.user_data = &channels[i];
         g_si.pif.controllers[i].rumblepak.rumble = rvip_rumble;
@@ -968,7 +968,7 @@ m64p_error main_run(void)
 
     /* open mpk file (if any) and connect it to mempaks */
     open_mpk_file(&mpk, get_mempaks_path());
-    for(i = 0; i < GAME_CONTROLLERS_COUNT; ++i)
+    for(i = 0; i < 4; ++i)
     {
         g_si.pif.controllers[i].mempak.user_data = &mpk;
         g_si.pif.controllers[i].mempak.save = save_mpk_file;
