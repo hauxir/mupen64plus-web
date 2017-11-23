@@ -24,14 +24,6 @@ CORE ?= mupen64plus-core
 CORE_DIR = $(CORE)/projects/unix
 CORE_LIB = $(CORE)$(POSTFIX)$(SO_EXTENSION)
 
-AUDIO ?= mupen64plus-audio-web
-AUDIO_DIR = $(AUDIO)/projects/unix/
-AUDIO_LIB = $(AUDIO).js
-
-NATIVE_AUDIO := mupen64plus-audio-sdl
-NATIVE_AUDIO_DIR = $(NATIVE_AUDIO)/projects/unix
-NATIVE_AUDIO_LIB = $(NATIVE_AUDIO).so
-
 VIDEO ?= mupen64plus-video-glide64mk2
 VIDEO_DIR = $(VIDEO)/projects/unix
 VIDEO_LIB = $(VIDEO)$(POSTFIX)$(SO_EXTENSION)
@@ -62,7 +54,6 @@ BOOST_FILESYSTEM_LIB = $(BOOST_LIB_DIR)/libboost_filesystem.a
 
 
 PLUGINS = $(PLUGINS_DIR)/$(CORE_LIB) \
-	$(PLUGINS_DIR)/$(AUDIO_LIB) \
 	$(PLUGINS_DIR)/$(VIDEO_LIB) \
 	$(PLUGINS_DIR)/$(INPUT_LIB) \
 	$(PLUGINS_DIR)/$(RSP_LIB) \
@@ -94,7 +85,7 @@ NATIVE_PLUGINS := \
 		$(NATIVE_BIN)/mupen64plus-rsp-hle.so \
 		$(NATIVE_BIN)/mupen64plus-video-glide64mk2.so \
 		$(NATIVE_BIN)/mupen64plus-video-rice.so \
-		$(NATIVE_BIN)/mupen64plus-audio-sdl.so \
+#		$(NATIVE_BIN)/mupen64plus-audio-sdl.so \
 
 NATIVE_EXE := $(NATIVE_BIN)/mupen64plus
 NATIVE_DEPS := $(NATIVE_PLUGINS) $(NATIVE_EXE)
@@ -157,7 +148,6 @@ clean-native:
 	cd $(RSP_DIR) && $(MAKE) clean
 	cd $(VIDEO_DIR) && $(MAKE) clean
 	cd $(RICE_VIDEO_DIR) && $(MAKE) clean
-	cd $(AUDIO_DIR) && $(MAKE) clean
 
 clean: clean-web clean-native
 
@@ -202,33 +192,13 @@ $(RICE_VIDEO_DIR)/mupen64plus-video-rice.so:
 $(NATIVE_BIN)/mupen64plus-video-rice.so: $(NATIVE_BIN) $(RICE_VIDEO_DIR)/mupen64plus-video-rice.so
 	cp $(RICE_VIDEO_DIR)/mupen64plus-video-rice.so $@
 
-$(NATIVE_AUDIO_DIR)/mupen64plus-audio-sdl.so:
-	cd $(NATIVE_AUDIO_DIR) && $(MAKE) all
-
-$(NATIVE_BIN)/mupen64plus-audio-sdl.so: $(NATIVE_BIN) $(NATIVE_AUDIO_DIR)/mupen64plus-audio-sdl.so
-	cp $(NATIVE_AUDIO_DIR)/mupen64plus-audio-sdl.so $@
-
-
-ifeq ($(config), debug)
-
-OPT_LEVEL = -O0
-DEBUG_LEVEL = -g2 -s ASSERTIONS=1
-
-else
-
 OPT_LEVEL = -O3 -s AGGRESSIVE_VARIABLE_ELIMINATION=1
-
-endif
 
 #$(PLUGINS_DIR)/%.js : %/projects/unix/%.js
 #	cp "$<" "$@"
 
 # libmupen64plus.so.2 deviates from standard naming
 $(PLUGINS_DIR)/$(CORE_LIB) : $(CORE_DIR)/$(CORE_LIB)
-	mkdir -p $(PLUGINS_DIR)
-	cp "$<" "$@"
-
-$(PLUGINS_DIR)/$(AUDIO_LIB) : $(AUDIO_DIR)/$(AUDIO_LIB)
 	mkdir -p $(PLUGINS_DIR)
 	cp "$<" "$@"
 
@@ -364,28 +334,6 @@ $(CORE_DIR)/$(CORE_LIB) :
 		OPTFLAGS="$(OPT_LEVEL) $(DEBUG_LEVEL) -s SIDE_MODULE=1  -DEMSCRIPTEN=1 -DONSCREEN_FPS=1" \
 		all
 
-$(AUDIO_DIR)/$(AUDIO_LIB) :
-	cd $(AUDIO_DIR) && \
-		emmake make \
-		POSTFIX=-web \
-		UNAME="Linux" \
-		EMSCRIPTEN=1 \
-		NO_SRC=1 \
-		NO_SPEEX=1 \
-		NO_OSS=1 \
-		SO_EXTENSION="js" \
-		USE_GLES=1 NO_ASM=1 \
-		ZLIB_CFLAGS="-s USE_ZLIB=1" \
-		PKG_CONFIG="" \
-		LIBPNG_CFLAGS="-s USE_LIBPNG=1" \
-		SDL_CFLAGS="-s USE_SDL=2" \
-		FREETYPE2_CFLAGS="-s USE_FREETYPE=1" \
-		GL_CFLAGS="" \
-		GLU_CFLAGS="" \
-		V=1 \
-		OPTFLAGS="$(OPT_LEVEL) $(DEBUG_LEVEL) -s SIDE_MODULE=1 -DEMSCRIPTEN=1 -DNO_FILTER_THREAD=1" \
-		all
-
 $(VIDEO_DIR)/$(VIDEO_LIB) : $(BOOST_FILESYSTEM_LIB)
 	cd $(VIDEO_DIR) && \
 	emmake make \
@@ -451,8 +399,6 @@ clean-web:
 	rm -fr $(BIN_DIR)
 	rm -f $(CORE_DIR)/$(CORE_LIB)
 	rm -fr $(CORE_DIR)/_obj$(POSTFIX)
-	rm -f $(AUDIO_DIR)/$(AUDIO_LIB)
-	rm -fr $(AUDIO_DIR)/_obj$(POSTFIX)
 	rm -f $(VIDEO_DIR)/$(VIDEO_LIB)
 	rm -fr $(VIDEO_DIR)/_obj$(POSTFIX)
 	rm -f $(INPUT_DIR)/$(INPUT_LIB)
