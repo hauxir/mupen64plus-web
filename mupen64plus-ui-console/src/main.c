@@ -1020,6 +1020,38 @@ int release_ddown(int c) {
     controller[c].buttons.D_DPAD= 0;
 }
 
+int press_cup(int c) {
+    controller[c].buttons.U_CBUTTON= 1;
+}
+
+int release_cup(int c) {
+    controller[c].buttons.U_CBUTTON = 0;
+}
+
+int press_cdown(int c) {
+    controller[c].buttons.D_CBUTTON = 1;
+}
+
+int release_cdown(int c) {
+    controller[c].buttons.D_CBUTTON = 0;
+}
+
+int press_cleft(int c) {
+    controller[c].buttons.L_CBUTTON = 1;
+}
+
+int release_cleft(int c) {
+    controller[c].buttons.L_CBUTTON = 0;
+}
+
+int press_cright(int c) {
+    controller[c].buttons.R_CBUTTON = 1;
+}
+
+int release_cright(int c) {
+    controller[c].buttons.R_CBUTTON = 0;
+}
+
 int set_x_axis(int c, int val) {
     controller[c].buttons.X_AXIS = val;
 }

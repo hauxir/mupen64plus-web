@@ -301,7 +301,7 @@ $(BIN_DIR)/$(TARGET_HTML): $(INDEX_TEMPLATE) $(PLUGINS) $(INPUT_FILES) Makefile
 			GL_CFLAGS="" \
 			GLU_CFLAGS="" \
 			V=1 \
-			-s EXPORTED_FUNCTIONS="['_press_a', '_release_a', '_press_start', '_release_start', '_press_z','_release_z', '_press_l', '_release_l','_press_r', '_release_r', '_press_dleft', '_release_dleft','_press_dright', '_release_dright', '_press_dup', '_release_dup', '_press_ddown', '_release_ddown', '_set_x_axis', '_set_y_axis']" \
+			-s EXPORTED_FUNCTIONS="['_press_a', '_release_a', '_press_start', '_release_start', '_press_z','_release_z', '_press_l', '_release_l','_press_r', '_release_r', '_press_dleft', '_release_dleft','_press_dright', '_release_dright', '_press_dup', '_release_dup', '_press_ddown', '_release_ddown', '_press_cup', '_release_cup', '_press_cdown', '_release_cdown', '_press_cleft', '_release_cleft', '_press_cright', '_release_cright', '_set_x_axis', '_set_y_axis']" \
 			OPTFLAGS="$(OPT_LEVEL) $(DEBUG_LEVEL) -s MAIN_MODULE=1 \
 			--preload-file $(BIN_DIR)/plugins@plugins \
 			--preload-file $(BIN_DIR)/data@data  \
